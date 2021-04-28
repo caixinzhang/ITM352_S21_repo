@@ -1,0 +1,168 @@
+<script src="./products.js" type="text/javascript"></script>
+
+
+<script>
+  function isNonNegInt(q, returnErrors=false) {
+    errors = []; // assume no errors at first
+if(Number(q) != q) errors.push('Not a number!'); // Check if string is a number value
+if(q < 0) errors.push('Negative value!'); // Check if it is non-negative
+if(parseInt(q) != q) errors.push('Not an integer!'); // Check that it is an integer
+    return returnErrors ? errors : (errors.length > 0)
+}
+
+  function generate_item_rows(product_quantities_array){
+    //lope through products array and output invoice table row
+    for(i in products){
+              // product row 
+              if(quantities[i] == 0) continue; 
+              extended_price = quantities[i]*products[i].price; //generate what to output in quantity cell
+              errs = isNonNegInt(quantities[i], true);
+              qty_str = quantities[i]; // add errors if present and zero the quantity so it does not affect calculation
+              if(errs.length> 0) {
+              qty_str +=`<br><span style="color:red;">${errs.join("<br>")}</span>`;
+               extended_price = 0; //don't allow bad quantity to mess up calculations
+              }
+
+              subtotal += extended_price; //running subotal
+              document.write(`
+          <tr>
+            <td width="43%">${products[i].type}</td>
+            <td align="center" width="11%">${qty_str}</td>
+            <td width="13%">\$${products[i].price}</td>
+            <td width="54%">\$${extended_price}</td>
+          </tr>
+          `);
+          }
+  }
+
+
+var url_string = window.location.href;
+var url = new URL(url_string);
+var a = url.searchParams.get("quantity0");
+var b = url.searchParams.get("quantity1");
+var c = url.searchParams.get("quantity2");
+var d = url.searchParams.get("quantity3");
+var e = url.searchParams.get("quantity4");
+var f = url.searchParams.get("quantity5");
+
+var quantities =[a, b, c, d, e, f];
+
+</script>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>invoice</title>
+</head>
+<body>
+  
+  <div style= "text-align: center;  margin-top:10px; top:0px; font-size: 50px;">
+        
+    <br><b><font color = "salon">INVOICE</font></div>
+
+  
+  <body style="background-image: url(./flowerimages/bg.jpg);">
+    <style>
+      h1 {text-align: center;} 
+      
+    </style>
+  
+
+    <table border="10">  
+        <tbody>
+          <tr>
+            <th style="text-align: center;font-family: Optima;" width="43%">Item</th>
+            <th style="text-align: center;font-family: Optima;" width="11%">quantity</th>
+            <th style="text-align: center;font-family: Optima;" width="13%">price</th>
+            <th style="text-align: center; font-family: Optima;"width="54%">extended price</th>
+          </tr>
+
+          <script>
+          
+      //sub-total
+      var extended_price;
+           subtotal=0;
+            generate_item_rows(quantities);
+            
+     //compute tax
+     var tax_rate = 0.0575;
+     var tax = tax_rate*subtotal;
+
+     //compute shipping
+     if(subtotal <=50) {
+       shipping =2;
+     }
+    else if(subtotal <=100){
+      shipping = 5;
+    }
+    else{
+      shipping = 0.05*subtotal; // 5% of subtotal
+    }
+     //compute grant total
+     var total = subtotal + tax + shipping;
+
+     
+        </script>
+        
+           <tr><td colspan="4" width="400%">&nbsp;</td></tr>
+
+        
+          <tr>
+            <td style="text-align: center;font-family: Garamond;" colspan="3" width="67%">Sub-total</td>
+            <td width="400%">$<script>document.write(subtotal);</script></td>
+          </tr>
+          <tr>
+            <td style="text-align: center;font-family: Garamond;" colspan="3" width="67%"><span style="font-family: Lucida Bright;">Tax @ <script>document.write(100*tax_rate);</script>%</span></td>
+            <td width="400%">$<script>document.write(tax.toFixed(2));</script></td>
+          </tr>
+          <td style="text-align: center; font-family: Garamond;" colspan="3" width="67%">Shipping</span></td>
+          <td width="400%">$<script>document.write(shipping.toFixed(2));</script></td>
+        </tr>
+          <tr>
+            <td style="text-align: center;font-family: Garamond;" colspan="3" width="67%"><strong>Total</strong></td>
+            <td width="54%"><strong>$<script>document.write(total.toFixed(2));</script></strong></td>
+          </tr>
+      
+        
+        </tbody>
+      </table>
+      <div style= "text-align: center; margin-top:10px; position:center; top: -14px">
+
+
+        <br><b>
+          <p style="font-size:21"> <br><b><font color = "green">   <script>
+            let params = (new URL(document.location)).searchParams;
+            document.write(`Thank You ${params.get('username')} for Choosing Us`)
+          </script></font>
+          <p style="font-size:22"><u> SHIPPING POLICY</u> </p >
+          <p style="font-size:21">Subtotal $0 - $29.99: $5 shipping</p >
+          <p style="font-size:21">Free Shipping on orders over $100+</p >
+          <p style="font-size:21">Estimate 3-5 days shipping </p >
+           </div>
+            </body></p >
+      </b></div>
+      
+   <br>
+      <p style="font-size: 22">
+      <p><a href="./products_display.html">Back to Product Page</a></p>
+      <p><a href="./login.html">Back to Login Page</a></p>
+    </p></br>
+
+       
+
+    
+</html>
+<!--<script>
+
+
+
+document.write(a," ", b," ",c," ",d," ",e);
+
+
+\
+
+</script>-->
