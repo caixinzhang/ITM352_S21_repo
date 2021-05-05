@@ -1,0 +1,13 @@
+  
+  /*to make the table center*/
+
+  
+  table.center {
+    margin-left:auto; 
+    margin-right:auto;
+  }
+
+a{
+	text-align:center;
+	display:block;
+}
