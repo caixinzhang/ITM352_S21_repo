@@ -1,0 +1,102 @@
+<!--Chloe and Caixin's stationery's product display page-->
+<!--Display the products with quantity selection and price-->
+
+<script src="products.js" type="text/javascript"></script>
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta Chloe="utf-8">
+    <title>Stationery Store</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Cherry+Swash|Raleway" rel="stylesheet">
+
+    <link href="products-style.css" rel="stylesheet">
+    
+
+</head>
+
+<body>
+
+    <header>
+        <h1>C&C Stationery Shop</h1>
+        
+    </header>                
+    <form action=" " name="product_selection_form" method="GET">
+  
+        <nav id="nav">
+            <ul>
+                <li><a href="./index.html">Home</a></li>
+
+                <li><div class="dropdown">
+                    <a class="dropbtn" href="./display.html">Products</a >
+                    <div class="dropdown-content"></div>
+                    
+                    <div>
+                <li><a href="./login.html">Login</a></li>
+                <li><a href="./register.html">Register</a></li>     
+                 </div>
+                </div>
+
+            </ul>
+        </nav>
+      
+
+
+        <main>
+            <style>
+        
+                body {  
+                    text-align: center;
+                }
+        
+                img {
+                    border: 1px solid rgb(236, 151, 54);
+                    /* Gray border */
+                    border-radius: 10px;
+                    /* Rounded border */
+                    padding: 7px;
+                    /* Some padding */
+                    width: 250px;
+                    /* Set a small width */
+                }
+        
+                /* Add a hover effect (blue shadow) */
+                img:hover {
+                    box-shadow: 0 0 5px 1px black;
+                }
+            </style>
+        </head>
+        
+           </form> 
+           <script>
+               for (let ptype in allProducts) {
+            document.write(`<a href="display.html?productType=${ptype}">  <img src="Images/${ptype}.JPG" width="500%"></a>`)}
+           </script>
+           
+        
+            <body>
+                
+               <div>
+  
+               </div>
+           
+<footer>
+
+
+        <h1>
+         Click Product Type To Make Your Selection
+        </h1>
+
+
+
+
+    </footer>
+    
+
+</body>
+  
+</html>
+

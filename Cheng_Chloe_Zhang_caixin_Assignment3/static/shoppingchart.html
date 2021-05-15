@@ -1,0 +1,159 @@
+<script src="products.js" type="text/javascript"></script>
+<!--in order to get user's infoirmation if we link it-->
+<script src="./user_data.json" type="json"></script>
+<script src="function.js" type="text/javascript"></script>
+ 
+<script>
+loadJSON('get_cart', function (response) {
+            // Parsing JSON string into object
+            shopping_cart = JSON.parse(response);
+        });
+</script>
+<!-- search params for error messge, if there is, alert it -->
+<script>
+  let params = (new URL(document.location)).searchParams;
+  if(params.has('error')){
+    alert(params.get('error'));
+  }
+</script>
+
+<script>
+  //reference from lab
+  function generate_item_rows(obj){
+  for(var i = 0; i < obj.length; i++){
+    extended_price = obj[i].price * obj[i].quantity;
+    subtotal += extended_price;
+    document.write(`
+      <tr>
+          <td width="43%"td width="43%">${obj[i].name}</td>
+          
+          <td align="center" width="11%">
+          <form action="/add_one" method="POST">
+          <input type="hidden" name="ProductName" value="${obj[i].name}">
+          <input type="hidden" value="1" name="add">
+          <input type='submit' value="+">
+          </form>
+          <input type="text" value="${obj[i].quantity}" name="quantity">
+          
+          <form action="/remove_one" method="POST">
+          <input type="hidden" name="ProductName" value="${obj[i].name}">
+          <input type="hidden" value="1" name="reduce">
+          <input type='submit' value="-">
+          </form>
+          </td>
+          
+          <td align="center" width="13%">\$${parseInt(obj[i].price)}</td>
+          <td width="13%">\$${parseInt(extended_price)}
+          <form action="/remove-from-cart" method="POST">                
+          <input type="hidden" name="ProductName" value="${obj[i].name}">
+          <input type="submit" value="remove ">  
+          </td>
+          </form>
+        </tr>
+
+      `);
+  }
+}
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check out</title>
+    <style>
+      table.center {
+  margin-left: auto; 
+  margin-right: auto;
+}
+    </style>
+    <link href="products-style.css" rel="stylesheet">
+    
+</head>
+<body style="background-color:rgba(251, 253, 243, 0.937);">
+  <style>
+    h1 {text-align: center;}
+  </style>
+
+  
+
+    <script>
+      if(params.has('fullname') && fullname != 'null'){
+          document.write(` <ul><li style="font-size: 15px">welcome, ${fullname}</li></ul>`);
+      }
+  </script>
+
+
+
+    
+    <table class="center" border="1" >
+        <tbody>
+          <tr>
+            <th style="text-align: center;font-family: Optima;" width="43%">Item</th>
+            <th style="text-align: center;font-family: Optima;" width="11%">quantity</th>
+            <th style="text-align: center;font-family: Optima;" width="13%">price</th>
+            <th style="text-align: center; font-family: Optima;"width="54%">extended price</th>
+          </tr>
+          <script>
+            subtotal=0;
+
+  generate_item_rows(shopping_cart);
+
+
+     //compute tax
+     var tax_rate = 0.0471;
+     var tax = tax_rate*subtotal;
+
+     //compute shipping
+     if(subtotal <=30) {
+       shipping =1;
+     }
+    else if(subtotal <=100){
+      shipping = 2;
+    }
+    else{
+      shipping = 0.03*subtotal; // 3% of subtotal
+    }
+     //compute grant total
+     var total = subtotal + tax + shipping;
+        </script>
+          <tr>
+            <td colspan="4" width="100%">&nbsp;</td>
+          </tr>
+          <tr>
+            <td style="text-align: center;font-family: Garamond;" colspan="3" width="67%">Sub-total</td>
+            <td width="54%">$<script>document.write(subtotal);</script></td>
+          </tr>
+          <tr>
+            <td style="text-align: center;font-family: Garamond;" colspan="3" width="67%"><span style="font-family: Lucida Bright;">Tax @ <script>document.write(100*tax_rate);</script>%</span></td>
+            <td width="54%">$<script>document.write(tax.toFixed(2));</script></td>
+          </tr>
+          <td style="text-align: center; font-family: Garamond;" colspan="3" width="67%">Shipping</span></td>
+          <td width="54%">$<script>document.write(shipping.toFixed(2));</script></td>
+        </tr>
+          <tr>
+            <td style="text-align: center;font-family: Garamond;" colspan="3" width="67%"><strong>Total</strong></td>
+            <td width="54%"><strong>$<script>document.write(total.toFixed(2));</script></strong></td>
+          </tr>
+          <tr>
+            <td style="border: 0px; text-align: center;font-family: Garamond;" colspan="3" width="67%"><strong></strong></td>
+            <td style="border: 0px;" width="54%"><form action="/checkout" method="GET"><input type="submit" value="checkout"></form></td>
+          </tr>
+        </tbody>
+      </table>
+      <div style= "text-align: center; margin-top:10px; position:relative; top: -14px">
+        <br><b>
+          <p style="font-size:22"><u> SHIPPING POLICY</u> </p>
+          <p style="font-size:21">Subtotal $0 - $29.99: $1 shipping</p>
+          <p style="font-size:21">Subtotal $30 - $99.99: $2 shipping</p>
+          <p style="font-size:21">Subtotals over $100: charged 3% of the subtotal amount</p>
+          <p style="font-size:21">Estimate 3-5 days shipping </p>
+          <p><a href="to-display">Back to Product Page</a></p>
+          <p><a href="./login.html">Back to Login Page</a></p>
+      </b></div>
+
+</body>
+
+</html>

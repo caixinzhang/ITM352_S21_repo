@@ -1,0 +1,89 @@
+    /*<!-- HTML  and CSS referenced: https://www.tutorialspoint.com/how-to-create-a-responsive-checkout-form-with-css -->*/
+    body {
+    font-family: Arial;
+    font-size: 17px;
+    padding: 8px;
+    }
+    * {
+    box-sizing: border-box;
+    }
+    .Fields {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    justify-content: space-around;
+    }
+    .Fields div {
+    margin-right: 10px;
+    }
+    label {
+    margin: 15px;
+    }
+    .formContainer {
+    margin: 10px;
+    background-color: #F8F8F8;
+    padding: 5px 20px 15px 20px;
+    border: 1px solid black;
+    border-radius: 3px;
+    }
+    .formContainer1 {
+
+    margin: 10px;
+    background-color: #F8F8F8;
+    padding: 5px 20px 15px 20px;
+    border: 1px solid black;
+    border-radius: 3px;
+    }
+    input[type="text"] {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    }
+    label {
+    margin-left: 20px;
+    display: block;
+    }
+    .icon-formContainer {
+    margin-bottom: 20px;
+    padding: 7px 0;
+    font-size: 24px;
+    }
+    .checkout {
+    background-color: #4caf50;
+    color: white;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    width: 100%;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 17px;
+    }
+    .checkout:hover {
+    background-color: #45a049;
+    }
+    a {
+    color: black;
+    }
+    span.price {
+
+    float: right;
+    color: grey;
+    }
+    @media (max-width: 800px) {
+    .Fields {
+    flex-direction: column-reverse;
+    }
+    }
+
+    .alert_box{
+  padding: 20px;
+  background-color:#FFA500; 
+  color: white;
+  margin-bottom: 15px;
+}
+
+   

@@ -1,0 +1,144 @@
+<!--Chloe and Caixin's stationery's product display page-->
+<!--Display the products with quantity selection and price-->
+
+<script src="products.js" type="text/javascript"></script>
+
+<script>
+    let params = (new URL(document.location)).searchParams; 
+    product_type=params.get("productType");
+    var fullname = params.get("fullname");
+    var count = params.get("count");
+    var error_msg = params.get('errors');
+    var products=allProducts[product_type];
+
+    if(params.has("errors")){
+        alert(error_msg);
+    }
+
+
+</script>
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta Chloe="utf-8">
+    <title>Stationery Store</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Cherry+Swash|Raleway" rel="stylesheet">
+
+    <link href="products-style.css" rel="stylesheet">
+    
+
+</head>
+
+<body>
+
+    <header>
+        <h1>C&C's Stationery</h1>
+       
+
+        
+    </header> 
+ 
+    <script>
+        document.write(`
+    <input type="hidden"  name="product_type" value="${product_type}">
+    `);
+    
+
+    </script>
+
+    
+    <div>
+        <ul>
+            <script>
+                       
+            // REFERENCED FROM ALYSSA MENCEL
+        // to display user information on the page
+      
+
+                if(params.has('fullname') && fullname != 'null'){
+                    document.write(` <ul><li style="font-size: 15px">welcome,${fullname}</li></ul>`);
+                }
+
+            </script>
+
+
+            <li><a href="/">Home</a></li>
+
+
+            <li><div class="dropdown">
+                <a class="dropbtn">Products</button></a>
+                <div class="dropdown-content">
+                    <script>
+                        for (let ptype in allProducts) {
+                           document.write(`<a href="display.html?productType=${ptype}&fullname=${fullname}&count=${count}">${ptype}</a>`)
+                            
+                        }
+                    </script>
+                
+                </div>
+                </div>
+            <li><a href="to-login">Login</a></li>
+            <li><a href="to-register">Register</a></li>
+            <li>
+             
+                <script>
+                    if(count == 'null' || count == 'undefined' || !count){
+                        document.write(`<a href="to-shoppingcart">Shopping Cart  0</a>`);
+                    }else{
+                        document.write(`<a href="to-shoppingcart">Shopping Cart  ${count}</a>`);
+                    }
+
+                    
+                    
+                </script>
+            </li>
+            <li style="float:right"><a class="active" href="log-out">Logout</a></li>
+            </ul>
+
+
+        <main>
+          
+       
+
+            <script>
+
+                //AIDED BY PROFESSOR PORT AND REFERENCE: WOD 
+                for (i = 0; i < products.length; i++) {
+                    document.write(`
+                <section class="item">
+                <h2>${products[i].name}</h2>
+                <p>$${products[i].price}</p>
+                <form action="add_cart" method="POST">
+
+                <label id="quantity${i}_label"}">Quantity</label>
+                <input type="hidden"  name="product_type" value="${product_type}">
+                <input type="hidden" name="ProductName" value="${products[i].name}">
+                <input type="hidden" name="price" value="${products[i].price}">
+                <input type="text" placeholder="0" name="quantity"
+                onkeyup="checkQuantityTextbox(this);">
+                <img src="./Images/${products[i].image}">
+                <input class="button" type="submit" value="ADD TO CART!" name="Purchase_submit">
+                </form>
+            </section>
+            `)
+                }
+            </script>
+        </main>
+    </div>
+
+    <footer>
+ 
+
+      
+        
+        <h1>
+            Your One Stop For Stationery
+        </h1>
+    </footer>
+
+</body>
+
+</html>

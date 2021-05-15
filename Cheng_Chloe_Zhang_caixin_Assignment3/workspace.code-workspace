@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../../../Downloads/Assignment3/Display_and_mail_invoice_example"
+		},
+		{
+			"path": "../../../../Downloads/Assignment3/Multi_Page_Navigation_example"
+		},
+		{
+			"path": "../../../../Downloads/Assignment3/simple_shopping_cart_example"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "ITM352_S21_repo"
+	}
+}

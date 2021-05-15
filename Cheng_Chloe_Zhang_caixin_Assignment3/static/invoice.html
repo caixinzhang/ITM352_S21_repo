@@ -1,0 +1,161 @@
+<script src="products.js" type="text/javascript"></script>
+<!--in order to get user's infoirmation if we link it-->
+<script src="./user_data.json" type="json"></script>
+<script src="function.js" type="text/javascript"></script>
+ 
+<script>
+  //REFERECES& MODIFIED FROM ASSIGNMENT3 
+loadJSON('get_cart', function (response) {
+            // Parsing JSON string into object
+            shopping_cart = JSON.parse(response);
+        });
+loadJSON('get_user', function(response){
+    user_info = JSON.parse(response);
+
+})
+var user = JSON.stringify(user_info.name).replace('"','').replace('"','');
+
+loadJSON('get_checkout_info', function(response){
+    checkout_info = JSON.parse(response);
+})
+
+var checkout_email = JSON.stringify(checkout_info.email).replace('"','').replace('"','');
+var checkout_name = JSON.stringify(checkout_info.firstname).replace('"','').replace('"','');
+var checkout_addr = JSON.stringify(checkout_info.address).replace('"','').replace('"','');
+</script>
+
+<script>
+    let params = (new URL(document.location)).searchParams;
+  
+</script>
+
+<script>
+
+function generate_item_rows(obj){
+  for(var i = 0; i < obj.length; i++){
+    extended_price = obj[i].price * obj[i].quantity;
+    subtotal += extended_price;
+    document.write(`
+      <tr>
+          <td align="center" width="43%">${obj[i].name}</td>
+          <td align="center" width="43%">${obj[i].quantity}</td>
+          <td align="center" width="13%">\$${parseInt(obj[i].price)}</td>
+          <td align="center" width="54%">\$${parseInt(extended_price)}</td>
+        </tr>
+
+      `);
+  }
+}
+
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check out</title>
+    <style>
+      table.center {
+  margin-left: auto; 
+  margin-right: auto;
+}
+    </style>
+    <link href="products-style.css" rel="stylesheet">
+    
+</head>
+<body style="background-color:rgba(251, 253, 243, 0.937);">
+  <style>
+    h1 {text-align: center;}
+  </style>
+
+    <script>
+      //show user's name on invoice
+      document.write (`
+          <h1 align="center">  Thank you ${user} for choosing us! &#128522;<h1>
+        `)
+  
+    </script>
+    
+    <table class="center" border="1" >
+        <tbody>
+          <tr>
+            <th style="text-align: center;font-family: Optima;" width="43%">Item</th>
+            <th style="text-align: center;font-family: Optima;" width="11%">quantity</th>
+            <th style="text-align: center;font-family: Optima;" width="13%">price</th>
+            <th style="text-align: center; font-family: Optima;"width="54%">extended price</th>
+          </tr>
+          <script>
+            subtotal=0;
+
+  generate_item_rows(shopping_cart);
+
+
+     //compute tax
+     var tax_rate = 0.0471;
+     var tax = tax_rate*subtotal;
+
+     //compute shipping
+     if(subtotal <=30) {
+       shipping =1;
+     }
+    else if(subtotal <=100){
+      shipping = 2;
+    }
+    else{
+      shipping = 0.03*subtotal; // 3% of subtotal
+    }
+     //compute grant total REFERENCE: WOD 
+     var total = subtotal + tax + shipping;
+        </script>
+          <tr>
+            <td colspan="4" width="100%">&nbsp;</td>
+          </tr>
+          <tr>
+            <td style="text-align: center;font-family: Garamond;" colspan="3" width="67%">Sub-total</td>
+            <td width="54%">$<script>document.write(subtotal);</script></td>
+          </tr>
+          <tr>
+            <td style="text-align: center;font-family: Garamond;" colspan="3" width="67%"><span style="font-family: Lucida Bright;">Tax @ <script>document.write(100*tax_rate);</script>%</span></td>
+            <td width="54%">$<script>document.write(tax.toFixed(2));</script></td>
+          </tr>
+          <td style="text-align: center; font-family: Garamond;" colspan="3" width="67%">Shipping</span></td>
+          <td width="54%">$<script>document.write(shipping.toFixed(2));</script></td>
+        </tr>
+          <tr>
+            <td style="text-align: center;font-family: Garamond;" colspan="3" width="67%"><strong>Total</strong></td>
+            <td width="54%"><strong>$<script>document.write(total.toFixed(2));</script></strong></td>
+          </tr>
+        </tbody>
+      </table>
+      <div style= "text-align: center; margin-top:10px; position:relative; top: -5px">
+        <b>
+
+          <script>
+            
+            if(params.has('email_error')){
+                document.write(`
+                <p style="font-size:21">unable to send invoice to email</p>
+                <p style="font-size:21">Delivery to:</p>
+                <p style="font-size:18">${checkout_name}</p>
+                <p style="font-size:18">${checkout_addr}</p>
+                `)
+            }else{
+                document.write(`
+                <p style="font-size:21">The invoice has been sent to ${checkout_email}</p>
+                <p style="font-size:21">Delivery to:</p>
+                <p style="font-size:18">${checkout_name}</p>
+                <p style="font-size:18">${checkout_addr}</p>
+                `)
+            }
+              
+          </script>
+          <p style="font-size:21">Estimate 3-5 days shipping </p>
+          <p><a href="to-display-clear">Back to Product Page</a></p>
+          <p><a href="./login.html">Back to Login Page</a></p>
+      </b></div>
+
+</body>
+
+</html>
